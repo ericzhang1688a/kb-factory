@@ -1,0 +1,192 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 千问VL
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.27@3c4e37fef7455da28d36d559dde85201fc0b4f1819b80cd24eba56da15a711f9
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1757771446551-source-1757771488080-target
+      source: '1757771446551'
+      sourceHandle: source
+      target: '1757771488080'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1757771488080-source-1757771589281-target
+      source: '1757771488080'
+      sourceHandle: source
+      target: '1757771589281'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          default: ''
+          hint: ''
+          label: images
+          max_length: 5
+          options: []
+          placeholder: ''
+          required: true
+          type: file-list
+          variable: images
+      height: 88
+      id: '1757771446551'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2.5-VL-72B-Instruct
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 6578023a-6938-42af-8977-d9f5f788fd01
+          role: system
+          text: ''
+        - id: 65d1e958-ac6b-4383-b8a0-18b3edf0079f
+          role: user
+          text: "你是一个专业的医学文档信息提取系统。请仔细分析输入图像{{#1757771446551.images#}}，识别其中关于不良事件内容，并按以下规则提取信息：\n\
+            提取每个不良事件的：名称、SOC（系统器官分类）、定义、引申注释（如有）、分级详情（等级和描述）；\n所有数据必须以 JSON 格式 输出，顶层键为 \"\
+            不良事件\"，其值是一个对象数组；\n每个不良事件对象中需包含 \"reference\" 字段，其中 \"来源\" 固定为 \"CTCAE\
+            \ v5.0\"，\"页码\" 需根据图像中出现的页码数字准确填写；\n仅输出 JSON，不要添加任何解释、说明或额外文本；\n确保单位、数值范围和术语与图像内容完全一致，不进行推测或补全；\n\
+            若图像中未明确页码，请将 \"页码\" 设为 null。\n示例输出格式如下（仅作结构参考，内容需根据图像实际信息填充）：\n{\n  \"\
+            不良事件\": [\n    {\n      \"名称\": \"贫血\",\n      \"SOC\": \"血液和淋巴系统疾病\"\
+            ,\n      \"定义\": \"100mL血液中的血红蛋白总量降低为特征的疾病...\",\n      \"引申注释\": \"\"\
+            ,\n      \"分级\": [\n        { \"等级\": 1, \"描述\": \"血红蛋白 < 正常值下限 ~ 10.0\
+            \ g/dL\" },\n        { \"等级\": 2, \"描述\": \"血红蛋白 < 10.0 ~ 8.0 g/dL\" }\n\
+            \      ],\n      \"reference\": {\n        \"来源\": \"CTCAE v5.0\",\n \
+            \       \"页码\": 25\n      }\n    }\n  ]\n}"
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1757771488080'
+      position:
+        x: 381.75785828325525
+        y: 282
+      positionAbsolute:
+        x: 381.75785828325525
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1757771488080'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 88
+      id: '1757771589281'
+      position:
+        x: 682
+        y: 282
+      positionAbsolute:
+        x: 682
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 175.43514764936572
+      y: -18.659578911963592
+      zoom: 1.3195079107728944
+  rag_pipeline_variables: []
