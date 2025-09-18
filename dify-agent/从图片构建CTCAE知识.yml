@@ -3,7 +3,7 @@ app:
   icon: 🤖
   icon_background: '#FFEAD5'
   mode: workflow
-  name: 千问VL
+  name: 从图片构建CTCAE知识
   use_icon_as_answer_icon: false
 dependencies:
 - current_identifier: null
@@ -105,7 +105,7 @@ workflow:
           required: true
           type: file-list
           variable: images
-      height: 88
+      height: 87
       id: '1757771446551'
       position:
         x: 80
@@ -117,7 +117,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 241
     - data:
         context:
           enabled: false
@@ -150,7 +150,7 @@ workflow:
         type: llm
         vision:
           enabled: false
-      height: 88
+      height: 87
       id: '1757771488080'
       position:
         x: 381.75785828325525
@@ -162,7 +162,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 241
     - data:
         outputs:
         - value_selector:
@@ -173,7 +173,7 @@ workflow:
         selected: false
         title: 结束
         type: end
-      height: 88
+      height: 87
       id: '1757771589281'
       position:
         x: 682
@@ -184,9 +184,9 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 241
     viewport:
-      x: 175.43514764936572
-      y: -18.659578911963592
+      x: -118.56485235063428
+      y: -100.65957891196354
       zoom: 1.3195079107728944
   rag_pipeline_variables: []
